@@ -27,8 +27,8 @@ a{color:inherit;text-decoration:none}
 
 /* HERO */
 .hero{height:100vh;height:100svh;display:grid;place-items:center;padding:0 6vw;position:relative}
-.hero h1{font-family:var(--display);font-weight:400;font-size:clamp(54px,15vw,150px);line-height:1.02;letter-spacing:.01em;word-spacing:-.06em;text-transform:uppercase;margin:0;max-width:13ch;text-align:center}
-.hero .w{opacity:.14;display:inline-block;text-shadow:0 0 0 rgba(245,240,235,0),0 0 0 rgba(245,240,235,0),0 0 0 rgba(255,100,50,0);will-change:opacity,text-shadow}
+.hero h1{font-family:var(--display);font-weight:400;font-size:clamp(46px,10.5vw,150px);line-height:.98;letter-spacing:.01em;word-spacing:-.06em;text-transform:uppercase;margin:0;max-width:16ch;text-align:left}
+.hero .w{opacity:.14;display:inline-block}
 .hero .w.hi{color:var(--accent)}
 
 /* CONTENT GARAGE */
@@ -156,7 +156,7 @@ const SITE = {
   worksNote: "stuff i've made",
   email: "business@ekparinda.in",
   socials: [["Instagram @ekparinda_", "https://www.instagram.com/ekparinda__/"]],
-  nowText: "People know me as Ekparinda, a bird that was never meant to stay in one place. Maybe I’m still that little kid who dreamed of seeing the world and believed life was bigger than the world he knew. I’ve grown up a little, but I’m trying to give that kid everything he once dreamed of. Maybe growing up isn’t about leaving your childhood behind, but carrying it with you wherever you go.",
+  nowText: "People know me as Ekparinda, a bird that was never meant to stay in one place. Somewhere along the way, I grew up, started taking life a little more seriously, I’ve grown up a little, but I still try to protect the child in me. Maybe that’s what keeps me creating. I read somewhere that an artist is just a child who survived and I think I did.",
   // Add your own work. video = path to your mp4 (e.g. "videos/one.mp4"), link = where "Watch" goes.
   works: [
     { title: "TVS Motors",   brand: "Collaboration", video: "videos/tvs.mp4",      poster: "videos/tvs.jpg",      link: "https://www.instagram.com/ekparinda__/" },
@@ -281,17 +281,8 @@ if (!reduce && window.gsap) {
   gsap.ticker.add(t => lenis.raf(t * 1000));
   gsap.ticker.lagSmoothing(0);
 
-  // spotlight: one word at a time lights up with a glow as you scroll
-  const heroWords = gsap.utils.toArray('.hero .w');
-  const LIT = { opacity: 1, textShadow: '0 0 10px rgba(245,240,235,.25),0 0 40px rgba(245,240,235,.1),0 0 80px rgba(255,100,50,.08)' };
-  const DIM = { opacity: .14, textShadow: '0 0 0 rgba(245,240,235,0),0 0 0 rgba(245,240,235,0),0 0 0 rgba(255,100,50,0)' };
-  const heroTl = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { trigger: '.hero', start: 'top top', end: () => '+=' + (heroWords.length * 45 + 40) + '%', scrub: .5, pin: true, anticipatePin: 1 } });
-  heroWords.forEach((w, i) => {
-    if (i === 0) gsap.set(w, LIT);
-    else heroTl.to(w, { ...LIT, duration: .4 }, i - .2);
-    if (i < heroWords.length - 1) heroTl.to(w, { ...DIM, duration: .4 }, i + .8);
-  });
-  heroTl.to({}, { duration: .6 });
+  gsap.timeline({ scrollTrigger: { trigger: '.hero', start: 'top top', end: '+=120%', scrub: true, pin: true } })
+    .to('.hero .w', { opacity: 1, stagger: 0.35, ease: 'none' });
 
   applyGeom();
   ScrollTrigger.addEventListener('refreshInit', applyGeom);
